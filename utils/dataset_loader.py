@@ -13,7 +13,7 @@ class CXRDataset(Dataset):
         """
         self.transform = transform
 
-        # Prepare dataset paths
+      
         self.dataset_paths = []
         # Shenzhen dataset path
         shenzhen_path = os.path.join(root_dir, 'shenzhen')
@@ -53,7 +53,6 @@ class CXRDataset(Dataset):
                 print(f"Warning: clinical file {clinical_file} incomplete, skipping.")
                 continue
 
-            # Parse first line: sex and age
             line1 = lines[0].lower()
             tokens = line1.split()
             if len(tokens) < 2:
@@ -70,10 +69,9 @@ class CXRDataset(Dataset):
                 print(f"Warning: cannot parse age in {clinical_file}, skipping.")
                 continue
 
-            # Encode sex: male=0, female=1
+         
             sex = 0 if sex_str.startswith('m') else 1
 
-            # Parse second line for abnormality
             abnormality_str = lines[1].lower()
             abnormality = 0 if 'normal' in abnormality_str else 1
 
@@ -83,7 +81,7 @@ class CXRDataset(Dataset):
                 'abnormality': abnormality
             }
 
-            # Extract label from filename _0.png or _1.png
+           
             label = 1 if img_file.endswith('_1.png') else 0
 
             samples.append((img_path, clinical_data, label))
@@ -100,7 +98,7 @@ class CXRDataset(Dataset):
         if self.transform:
             image = self.transform(image)
 
-        # Convert clinical data dict to tensor (age, sex, abnormality)
+        
         clinical_tensor = torch.tensor([
             clinical_data['age'],
             clinical_data['sex'],

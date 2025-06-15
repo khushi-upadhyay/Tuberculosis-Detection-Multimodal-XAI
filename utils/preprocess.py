@@ -3,8 +3,7 @@
 import torch
 from tqdm import tqdm
 from torchvision import transforms
-from utils.dataset_loader import CXRDataset  # relative import
-
+from utils.dataset_loader import CXRDataset  
 def save_preprocessed_data(root_dir, output_path='processed_data.pt', use_montgomery=False):
     transform = transforms.Compose([
         transforms.Resize((224, 224)),

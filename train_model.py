@@ -1,32 +1,3 @@
-# from torch.utils.data import DataLoader
-# from utils.dataset_loader import CXRDataset
-# from torchvision import transforms
-
-# def main():
-#     # Define transforms
-#     transform = transforms.Compose([
-#         transforms.Resize((224, 224)),
-#         transforms.ToTensor(),
-#     ])
-
-#     # Create dataset
-#     dataset = CXRDataset(root_dir='data/', use_montgomery=True, transform=transform)
-
-#     # Create DataLoader for batching
-#     dataloader = DataLoader(dataset, batch_size=16, shuffle=True, num_workers=4)
-
-#     num_epochs = 1
-
-#     # Example training loop snippet
-#     for epoch in range(num_epochs):
-#         print(f"Epoch {epoch+1}/{num_epochs}")
-#         for images, clinical_data, labels in dataloader:
-#             # Your training code here
-#             pass
-
-# if __name__ == '__main__':
-#     main()
-
 
 import torch
 import torch.nn as nn
@@ -39,21 +10,21 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Using device: {device}')
 
-    # Transforms
+   
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],  # ImageNet normalization
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],  
                              std=[0.229, 0.224, 0.225]),
     ])
 
-    # Dataset and DataLoader
+    
     dataset = CXRDataset(root_dir='data/', use_montgomery=True, transform=transform)
-    dataloader = DataLoader(dataset, batch_size=8, shuffle=True, num_workers=2)  # smaller batch for light load
+    dataloader = DataLoader(dataset, batch_size=8, shuffle=True, num_workers=2) 
 
-    # Load pretrained ResNet18 and modify final layer for binary classification
+    
     model = models.resnet18(pretrained=True)
-    model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes: TB and Normal
+    model.fc = nn.Linear(model.fc.in_features, 2)  
     model = model.to(device)
 
     criterion = nn.CrossEntropyLoss()
