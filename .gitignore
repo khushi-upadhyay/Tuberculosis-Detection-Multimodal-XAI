@@ -1,0 +1,21 @@
+ 
+# Data folders
+data/
+data/shenzhen/
+data/montgomery/
+
+# Python virtual environment
+venv/
+env/
+
+# Python-related
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
